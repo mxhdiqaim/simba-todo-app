@@ -1,12 +1,13 @@
 import './App.css';
 import TodoState from './context/todos/TodoState';
-import Todos from './components/Todos';
+
+import Home from './components/pages/Home';
 
 const App = () => {
   console.log('Hello from App.js');
   return (
     <TodoState>
-      <Todos />
+      <Home />
     </TodoState>
   );
 };
