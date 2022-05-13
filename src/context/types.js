@@ -4,3 +4,4 @@ export const UPDATE_TODO = 'UPDATE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const TODO_ERROR = 'TODO_ERROR';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
+export const TOGGLE_COMPLETE = 'TOGGLE_COMPLETE';

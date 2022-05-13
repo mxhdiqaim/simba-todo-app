@@ -2,7 +2,13 @@ import { useReducer } from 'react';
 import TodoReducer from './todoReducer';
 import TodoContext from './todoContext';
 
-import { GET_TODOS, TODO_ERROR, TOGGLE_LOADING } from '../types';
+import {
+  DELETE_TODO,
+  GET_TODOS,
+  TODO_ERROR,
+  TOGGLE_COMPLETE,
+  TOGGLE_LOADING,
+} from '../types';
 
 const TodoState = props => {
   const initialState = {
@@ -59,6 +65,21 @@ const TodoState = props => {
   const toggleLoading = loading =>
     dispatch({ type: TOGGLE_LOADING, payload: loading });
 
+  // TOGGLE COMPLETE
+  const toggleComplete = id => {
+    dispatch({ type: TOGGLE_COMPLETE, payload: id });
+    // setTasks(
+    //   tasks.map((task) =>
+    //     task.id === id ? { ...task, reminder: data.reminder } : task
+    //   )
+    // )
+  };
+
+  // DELETE TODO
+  const onDelete = id => {
+    dispatch({ type: DELETE_TODO, payload: id });
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -66,6 +87,8 @@ const TodoState = props => {
         isLoading: state.isLoading,
         getTodos,
         toggleLoading,
+        toggleComplete,
+        onDelete,
       }}>
       {props.children}
     </TodoContext.Provider>
