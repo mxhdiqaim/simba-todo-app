@@ -19,6 +19,11 @@ body {
   padding: 20px;
 }
 
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -51,6 +56,10 @@ body {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .todo {

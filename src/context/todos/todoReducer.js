@@ -3,6 +3,7 @@ import {
   GET_TODOS,
   TOGGLE_IMPORTANT,
   TOGGLE_LOADING,
+  TOGGLE_COMPLETE,
 } from '../types';
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -18,14 +19,18 @@ export default (state, action) => {
     case TOGGLE_IMPORTANT:
       return {
         ...state,
-        // setTasks(
-        //   tasks.map((task) =>
-        //     task.id === id ? { ...task, reminder: data.reminder } : task
-        //   )
-        // )
         todos: state.todos.map(todo =>
           todo.id === action.payload
             ? { ...todo, important: !todo.important }
+            : todo,
+        ),
+      };
+    case TOGGLE_COMPLETE:
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.payload
+            ? { ...todo, isCompleted: !todo.isCompleted }
             : todo,
         ),
       };

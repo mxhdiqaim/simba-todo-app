@@ -1,35 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import TodoContext from '../../context/todos/todoContext';
 
 import PropTypes from 'prop-types';
 const TodoItem = ({ todo }) => {
-  const { toggleComplete, onDelete } = useContext(TodoContext);
-
-  const { isCompleted, setIsCompleted } = useState(todo.isCompleted);
+  // CONTEXT
+  const { toggleImportant, onDelete, toggleComplete } = useContext(TodoContext);
 
   return (
     <div
       className={`todo ${todo.important && 'important'}`}
-      onDoubleClick={() => toggleComplete(todo.id)}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}>
-        {todo.isCompleted ? (
-          <AiFillCheckCircle style={{ color: 'green', cursor: 'pointer' }} />
-        ) : (
-          <input
-            type='checkbox'
-            name='todo'
-            checked={isCompleted}
-            style={{ cursor: 'pointer' }}
-            onChange={e => setIsCompleted(e.currentTarget.checked)}
-          />
-        )}
+      onDoubleClick={() => toggleImportant(todo.id)}>
+      <div className='flex-row'>
+        {/* COMPLETE btn */}
+        <AiFillCheckCircle
+          className='pointer'
+          style={todo.isCompleted ? { color: 'green' } : { color: 'gray' }}
+          onClick={() => toggleComplete(todo.id)}
+        />
+
         <h3 style={{ width: '100%' }}>
-          {todo.title}{' '}
+          {todo.title} {/* CLOSE btn below */}
           <AiFillCloseCircle
             style={{ color: '#b90000', cursor: 'pointer' }}
             onClick={() => onDelete(todo.id)}

@@ -6,6 +6,7 @@ import {
   DELETE_TODO,
   GET_TODOS,
   TODO_ERROR,
+  TOGGLE_COMPLETE,
   TOGGLE_IMPORTANT,
   TOGGLE_LOADING,
 } from '../types';
@@ -62,12 +63,18 @@ const TodoState = props => {
     }
   };
 
+  // TOGGLE LOADING
   const toggleLoading = loading =>
     dispatch({ type: TOGGLE_LOADING, payload: loading });
 
+  // TOGGLE IMPORTANT
+  const toggleImportant = id => {
+    dispatch({ type: TOGGLE_IMPORTANT, payload: id });
+  };
+
   // TOGGLE COMPLETE
   const toggleComplete = id => {
-    dispatch({ type: TOGGLE_IMPORTANT, payload: id });
+    dispatch({ type: TOGGLE_COMPLETE, payload: id });
   };
 
   // DELETE TODO
@@ -82,6 +89,7 @@ const TodoState = props => {
         isLoading: state.isLoading,
         getTodos,
         toggleLoading,
+        toggleImportant,
         toggleComplete,
         onDelete,
       }}>
