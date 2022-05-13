@@ -6,7 +6,7 @@ import {
   DELETE_TODO,
   GET_TODOS,
   TODO_ERROR,
-  TOGGLE_COMPLETE,
+  TOGGLE_IMPORTANT,
   TOGGLE_LOADING,
 } from '../types';
 
@@ -67,12 +67,7 @@ const TodoState = props => {
 
   // TOGGLE COMPLETE
   const toggleComplete = id => {
-    dispatch({ type: TOGGLE_COMPLETE, payload: id });
-    // setTasks(
-    //   tasks.map((task) =>
-    //     task.id === id ? { ...task, reminder: data.reminder } : task
-    //   )
-    // )
+    dispatch({ type: TOGGLE_IMPORTANT, payload: id });
   };
 
   // DELETE TODO

@@ -1,7 +1,7 @@
 import {
   DELETE_TODO,
   GET_TODOS,
-  TOGGLE_COMPLETE,
+  TOGGLE_IMPORTANT,
   TOGGLE_LOADING,
 } from '../types';
 
@@ -15,9 +15,7 @@ export default (state, action) => {
         ...state,
         isLoading: action.payload,
       };
-    case TOGGLE_COMPLETE:
-      // console.log(state.todos);
-      console.log(action.payload);
+    case TOGGLE_IMPORTANT:
       return {
         ...state,
         // setTasks(
@@ -25,6 +23,11 @@ export default (state, action) => {
         //     task.id === id ? { ...task, reminder: data.reminder } : task
         //   )
         // )
+        todos: state.todos.map(todo =>
+          todo.id === action.payload
+            ? { ...todo, important: !todo.important }
+            : todo,
+        ),
       };
     case DELETE_TODO:
       return {
