@@ -1,6 +1,7 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import TodoReducer from './todoReducer';
 import TodoContext from './todoContext';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   DELETE_TODO,
@@ -12,47 +13,13 @@ import {
   TOGGLE_IMPORTANT,
   TOGGLE_LOADING,
   TOGGLE_MODAL,
+  ADD_TODO,
 } from '../types';
+import axios from 'axios';
 
 const TodoState = props => {
   const initialState = {
-    todos: [
-      {
-        id: 1,
-        title: 'todo one',
-        isCompleted: false,
-        description: 'this is todo one description ',
-        important: true,
-      },
-      {
-        id: 2,
-        title: 'todo two',
-        isCompleted: true,
-        description: 'this is todo two description',
-        important: true,
-      },
-      {
-        id: 3,
-        title: 'todo three',
-        isCompleted: true,
-        description: 'this is todo three description',
-        important: false,
-      },
-      {
-        id: 4,
-        title: 'todo four',
-        isCompleted: false,
-        description: 'this is todo four description',
-        important: true,
-      },
-      {
-        id: 5,
-        title: 'todo five',
-        isCompleted: false,
-        description: 'this is todo five description',
-        important: true,
-      },
-    ],
+    todos: [],
     current: null,
     todo: null,
     isLoading: false,
@@ -61,9 +28,30 @@ const TodoState = props => {
 
   const [state, dispatch] = useReducer(TodoReducer, initialState);
 
+  // GET TODOS
   const getTodos = () => {
     try {
       dispatch({ type: GET_TODOS, payload: 'todos' });
+    } catch (err) {
+      dispatch({ type: TODO_ERROR, payload: 'error message' });
+    }
+  };
+
+  const addTodo = todo => {
+    try {
+      const id = uuidv4();
+      const newTodo = { id, ...todo };
+
+      dispatch({ type: ADD_TODO, payload: newTodo });
+    } catch (err) {
+      dispatch({ type: TODO_ERROR, payload: 'error message' });
+    }
+  };
+
+  // UPDATE TODO
+  const onUpdate = todo => {
+    try {
+      dispatch({ type: UPDATE_TODO, payload: todo });
     } catch (err) {
       dispatch({ type: TODO_ERROR, payload: 'error message' });
     }
@@ -88,10 +76,6 @@ const TodoState = props => {
     dispatch({ type: SET_CORRENT, payload: current });
   };
 
-  // UPDATE TODO
-  const onUpdate = todo => {
-    dispatch({ type: UPDATE_TODO, payload: todo });
-  };
   // DELETE TODO
   const onDelete = id => {
     dispatch({ type: DELETE_TODO, payload: id });
@@ -100,6 +84,24 @@ const TodoState = props => {
   const toggleModal = () => {
     dispatch({ type: TOGGLE_MODAL });
   };
+
+  useEffect(() => {
+    const getTodos = async () => {
+      // const res = await axios.get('http://localhost:5000/todos');
+      // console.log(res.data);
+
+      try {
+        const { data } = await axios.get('http://localhost:5000/todos');
+        console.log(data);
+
+        dispatch({ type: GET_TODOS, payload: data });
+      } catch (err) {
+        dispatch({ type: TODO_ERROR, payload: 'error message' });
+      }
+    };
+
+    getTodos();
+  }, []);
 
   return (
     <TodoContext.Provider
@@ -113,6 +115,7 @@ const TodoState = props => {
         toggleLoading,
         toggleImportant,
         toggleComplete,
+        addTodo,
         setCurrent,
         onUpdate,
         onDelete,

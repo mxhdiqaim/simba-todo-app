@@ -3,16 +3,23 @@ import { useState, useContext } from 'react';
 import TodoContext from '../../context/todos/todoContext';
 
 const AddTodo = () => {
-  const { current, onUpdate } = useContext(TodoContext);
+  const { current, onUpdate, addTodo } = useContext(TodoContext);
 
-  const [todo, setTodo] = useState(current?.title);
+  const [title, setTodo] = useState(current?.title);
   const [description, setDescription] = useState(current?.description);
-  const [important, setImportat] = useState(current?.important);
+  const [important, setImportat] = useState(
+    current ? current.important : false,
+  );
+  const [isCompleted] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
-
-    onUpdate({ todo, description, important });
+    if (current) {
+      console.log(current);
+      onUpdate(current);
+    } else {
+      addTodo({ title, description, important, isCompleted });
+    }
   };
 
   return (
@@ -22,7 +29,7 @@ const AddTodo = () => {
         <input
           type='text'
           placeholder='Add Todo'
-          value={todo}
+          value={title}
           onChange={e => setTodo(e.target.value)}
           required
         />

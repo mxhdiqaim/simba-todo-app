@@ -7,13 +7,33 @@ import {
   SET_CORRENT,
   TOGGLE_MODAL,
   UPDATE_TODO,
+  ADD_TODO,
 } from '../types';
 
 const todoReducer = (state, action) => {
   switch (action.type) {
     // GET TODOS
     case GET_TODOS:
-      return;
+      return {
+        todos: [state.todos, ...action.payload],
+      };
+    // ADD TODO
+    case ADD_TODO:
+      // console.log(action.payload);
+      return {
+        ...state,
+        todos: [action.payload, ...state.todos],
+        modalOpen: false,
+      };
+
+    // UPDATE TODO
+    case UPDATE_TODO:
+      return {
+        ...state,
+        todo: action.payload,
+        modalOpen: false,
+      };
+
     // LOADING
     case TOGGLE_LOADING:
       return {
@@ -46,13 +66,7 @@ const todoReducer = (state, action) => {
         current: action.payload,
         modalOpen: true,
       };
-    // UPDATE TODO
-    case UPDATE_TODO:
-      return {
-        ...state,
-        todo: action.payload,
-        modalOpen: false,
-      };
+
     // DELETE TODO
     case DELETE_TODO:
       return {
