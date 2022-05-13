@@ -9,7 +9,8 @@ import TodoContext from '../../context/todos/todoContext';
 import PropTypes from 'prop-types';
 const TodoItem = ({ todo }) => {
   // CONTEXT
-  const { toggleImportant, onDelete, toggleComplete } = useContext(TodoContext);
+  const { toggleImportant, onDelete, toggleComplete, setCurrent } =
+    useContext(TodoContext);
 
   return (
     <div
@@ -23,11 +24,18 @@ const TodoItem = ({ todo }) => {
           style={todo.isCompleted ? { color: 'green' } : { color: 'gray' }}
           onClick={() => toggleComplete(todo.id)}
         />
-
         <h3 style={{ width: '100%' }}>
-          {todo.title} {/* CLOSE btn below */}
+          {todo.title}{' '}
+          {/**
+           *  CLOSE btn
+           * below */}
           <div className='btn-action'>
-            <AiTwotoneEdit size={20} className='btn-edit' />
+            <AiTwotoneEdit
+              size={20}
+              className='btn-edit'
+              onClick={() => setCurrent(todo)}
+            />
+            {/* EDIT btn */}
             <AiFillCloseCircle
               className='btn-close'
               onClick={() => onDelete(todo.id)}
