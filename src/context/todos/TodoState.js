@@ -18,7 +18,7 @@ const TodoState = props => {
         id: 1,
         title: 'todo one',
         isCompleted: false,
-        description: 'this is todo one description',
+        description: 'this is todo one description ',
         important: true,
       },
       {

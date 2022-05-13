@@ -1,5 +1,9 @@
 import React, { useContext } from 'react';
-import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
+import {
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiTwotoneEdit,
+} from 'react-icons/ai';
 import TodoContext from '../../context/todos/todoContext';
 
 import PropTypes from 'prop-types';
@@ -15,19 +19,25 @@ const TodoItem = ({ todo }) => {
         {/* COMPLETE btn */}
         <AiFillCheckCircle
           className='pointer'
+          size={20}
           style={todo.isCompleted ? { color: 'green' } : { color: 'gray' }}
           onClick={() => toggleComplete(todo.id)}
         />
 
         <h3 style={{ width: '100%' }}>
           {todo.title} {/* CLOSE btn below */}
-          <AiFillCloseCircle
-            style={{ color: '#b90000', cursor: 'pointer' }}
-            onClick={() => onDelete(todo.id)}
-          />{' '}
+          <div className='btn-action'>
+            <AiTwotoneEdit size={20} className='btn-edit' />
+            <AiFillCloseCircle
+              className='btn-close'
+              onClick={() => onDelete(todo.id)}
+            />{' '}
+          </div>
         </h3>
       </div>
-      <p>{todo.description}</p>
+      <div style={{ display: 'flex' }}>
+        <p>{todo.description}</p>
+      </div>
     </div>
   );
 };

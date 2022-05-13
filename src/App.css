@@ -53,6 +53,24 @@ body {
   transform: scale(0.98);
 }
 
+.btn-close {
+  color: #b90000;
+  cursor: pointer;
+}
+
+.btn-edit {
+  color: green;
+  margin-right: 10px;
+}
+
+.btn-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
 .btn-block {
   display: block;
   width: 100%;

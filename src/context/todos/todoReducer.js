@@ -6,16 +6,18 @@ import {
   TOGGLE_COMPLETE,
 } from '../types';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (state, action) => {
+const todoReducer = (state, action) => {
   switch (action.type) {
+    // GET TODOS
     case GET_TODOS:
       return;
+    // LOADING
     case TOGGLE_LOADING:
       return {
         ...state,
         isLoading: action.payload,
       };
+    // TOGGLE IMPORTANT
     case TOGGLE_IMPORTANT:
       return {
         ...state,
@@ -25,6 +27,7 @@ export default (state, action) => {
             : todo,
         ),
       };
+    // TOGGLE COMPLETE
     case TOGGLE_COMPLETE:
       return {
         ...state,
@@ -34,6 +37,7 @@ export default (state, action) => {
             : todo,
         ),
       };
+    // TOGGLE TODO
     case DELETE_TODO:
       return {
         ...state,
@@ -43,3 +47,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default todoReducer;
