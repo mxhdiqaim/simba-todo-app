@@ -8,7 +8,7 @@ import TodoContext from '../../context/todos/todoContext';
 
 import PropTypes from 'prop-types';
 const TodoItem = ({ todo }) => {
-  // CONTEXT
+  // CONTEXT destructuring
   const { toggleImportant, onDelete, toggleComplete, setCurrent } =
     useContext(TodoContext);
 
@@ -50,6 +50,7 @@ const TodoItem = ({ todo }) => {
   );
 };
 
+// Proptypes
 TodoItem.prototype = {
   todo: PropTypes.object.isRequired,
 };

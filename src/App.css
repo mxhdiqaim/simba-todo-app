@@ -87,10 +87,6 @@ body {
   cursor: pointer;
 }
 
-/* .todo:hover {
-  background: blue;
-} */
-
 .todo.important {
   border-right: 5px solid #b90000;
 }

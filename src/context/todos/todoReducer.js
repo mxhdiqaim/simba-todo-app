@@ -1,3 +1,4 @@
+// TYPES imports
 import {
   DELETE_TODO,
   GET_TODOS,
@@ -28,6 +29,9 @@ const todoReducer = (state, action) => {
 
     // UPDATE TODO
     case UPDATE_TODO:
+      /**
+       * from todos array in global state, I loop through it and filter out the one which it id didn't match the action.payload.id and then add the current updated todo from action.payload
+       */
       return {
         ...state,
         todos: [
@@ -45,6 +49,9 @@ const todoReducer = (state, action) => {
       };
     // TOGGLE IMPORTANT
     case TOGGLE_IMPORTANT:
+      /**
+       * to set the important, first map the todos global state i.e (state.todos) get the id of the current iteration === action.payload (id), spread the todo, then change the important to it opposite, else return the todo
+       */
       return {
         ...state,
         todos: state.todos.map(todo =>
@@ -55,6 +62,9 @@ const todoReducer = (state, action) => {
       };
     // TOGGLE COMPLETE
     case TOGGLE_COMPLETE:
+      /**
+       * Same thing as TOGGLE_IMPORTANT, just instead of { ...todo, important: !todo.important }, we have  { ...todo, isCompleted: !todo.isCompleted }
+       */
       return {
         ...state,
         todos: state.todos.map(todo =>
@@ -64,6 +74,7 @@ const todoReducer = (state, action) => {
         ),
       };
     case SET_CORRENT:
+      // SET_CORRENT is glabal state take care of the edit func, it holds the editable todo for some time and update it after .
       return {
         ...state,
         current: action.payload,
@@ -73,6 +84,8 @@ const todoReducer = (state, action) => {
 
     // DELETE TODO
     case DELETE_TODO:
+      // spread the state first.
+      // Then filter out the one it ID matches and return the remainin todo.
       return {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.payload),

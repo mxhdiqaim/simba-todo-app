@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Button from './Button';
 
-const Header = ({ title, onAdd, showAdd, toggleModal }) => {
+const Header = ({ title, showAdd, toggleModal }) => {
   return (
     <header className='header'>
       <h1>{title}</h1>
@@ -14,10 +14,12 @@ const Header = ({ title, onAdd, showAdd, toggleModal }) => {
   );
 };
 
+// Default props
 Header.defaultProps = {
   title: 'Simba Todo App',
 };
 
+// proptypes
 Header.propTypes = {
   title: PropTypes.string.isRequired,
 };

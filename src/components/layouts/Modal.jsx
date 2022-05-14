@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
-import TodoContext from '../../context/todos/todoContext';
+import PropTypes from 'prop-types';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import AddTodo from './AddTodo';
 
+// To get rid of the warning in the console
 Modal.setAppElement('#root');
-const ModalComponent = () => {
-  const { modalOpen, toggleModal } = useContext(TodoContext);
-
+const ModalComponent = ({ modalOpen, toggleModal }) => {
   return (
     <Modal
       isOpen={modalOpen}
@@ -31,4 +30,10 @@ const content = {
   margin: '0px auto',
   maxWidth: '850px',
   height: '400px',
+};
+
+// PropTypes
+ModalComponent.prototype = {
+  modalOpen: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };

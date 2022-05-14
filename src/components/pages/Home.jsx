@@ -11,7 +11,7 @@ const Home = () => {
     <div className='container'>
       <Header toggleModal={toggleModal} />
       <Todos />
-      <ModalComponent modalOpen={modalOpen} />
+      <ModalComponent modalOpen={modalOpen} toggleModal={toggleModal} />
     </div>
   );
 };

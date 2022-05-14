@@ -1,12 +1,12 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import TodoReducer from './todoReducer';
 import TodoContext from './todoContext';
 import { v4 as uuidv4 } from 'uuid';
 
+// TYPES imports
 import {
   DELETE_TODO,
   UPDATE_TODO,
-  GET_TODOS,
   SET_CORRENT,
   TODO_ERROR,
   TOGGLE_COMPLETE,
@@ -15,10 +15,13 @@ import {
   TOGGLE_MODAL,
   ADD_TODO,
 } from '../types';
-import axios from 'axios';
 
 const TodoState = props => {
+  /**
+   * Initial Global State
+   */
   const initialState = {
+    //Todos state
     todos: [
       {
         id: 1,
@@ -64,23 +67,40 @@ const TodoState = props => {
 
   const [state, dispatch] = useReducer(TodoReducer, initialState);
 
+  // addTodo func
   const addTodo = todo => {
     try {
+      // creating the id of todo
       const id = uuidv4();
+      // merging it with created todo
       const newTodo = { id, ...todo };
 
+      // Dispatching created todo to reducer
       dispatch({ type: ADD_TODO, payload: newTodo });
     } catch (err) {
-      dispatch({ type: TODO_ERROR, payload: 'error message' });
+      // error catching
+      dispatch({ type: TODO_ERROR, payload: 'Something went wrong...' });
     }
   };
 
   // UPDATE TODO
   const onUpdate = todo => {
     try {
+      // dispatching update todo to reducer
       dispatch({ type: UPDATE_TODO, payload: todo });
     } catch (err) {
-      dispatch({ type: TODO_ERROR, payload: 'error message' });
+      // error catching
+      dispatch({ type: TODO_ERROR, payload: 'Something went wrong...' });
+    }
+  };
+
+  // DELETE TODO
+  const onDelete = id => {
+    try {
+      dispatch({ type: DELETE_TODO, payload: id });
+    } catch (err) {
+      // error catching
+      dispatch({ type: TODO_ERROR, payload: 'Something went wrong...' });
     }
   };
 
@@ -103,32 +123,10 @@ const TodoState = props => {
     dispatch({ type: SET_CORRENT, payload: current });
   };
 
-  // DELETE TODO
-  const onDelete = id => {
-    dispatch({ type: DELETE_TODO, payload: id });
-  };
   // TOGGLE MODAL
   const toggleModal = () => {
     dispatch({ type: TOGGLE_MODAL });
   };
-
-  useEffect(() => {
-    const getTodos = async () => {
-      // const res = await axios.get('http://localhost:5000/todos');
-      // console.log(res.data);
-
-      try {
-        const { data } = await axios.get('http://localhost:5000/todos');
-        console.log(data);
-
-        dispatch({ type: GET_TODOS, payload: data });
-      } catch (err) {
-        dispatch({ type: TODO_ERROR, payload: 'error message' });
-      }
-    };
-
-    getTodos();
-  }, []);
 
   return (
     <TodoContext.Provider
@@ -138,7 +136,6 @@ const TodoState = props => {
         todo: state.todo,
         modalOpen: state.modalOpen,
         isLoading: state.isLoading,
-
         toggleLoading,
         toggleImportant,
         toggleComplete,

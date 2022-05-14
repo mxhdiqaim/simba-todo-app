@@ -3,8 +3,10 @@ import { useState, useContext } from 'react';
 import TodoContext from '../../context/todos/todoContext';
 
 const AddTodo = () => {
+  // Context destructuring
   const { current, onUpdate, addTodo } = useContext(TodoContext);
 
+  // Todo Local State
   const [todo, setTodo] = useState({
     id: current && current.id,
     title: current ? current.title : '',
@@ -13,19 +15,30 @@ const AddTodo = () => {
     isCompleted: false,
   });
 
+  // onChange for input
   const onChange = e => setTodo({ ...todo, [e.target.name]: e.target.value });
 
+  // Destructure from todo state above
   const { id, title, description, important, isCompleted } = todo;
 
+  // Get the todoData base on current or not current
   const todoData = current
     ? { id, title, description, important, isCompleted }
     : { title, description, important, isCompleted };
 
+  // onSubmit func for addTodo ot upDate todo
   const onSubmit = e => {
     e.preventDefault();
+
+    // Check if current is available
+    /**
+     * current is a global state that hold the todo that is about to be updated, when you click an edit icon, it will push the todo to current
+     */
     if (current === null) {
+      // addTodo func call
       addTodo(todoData);
     } else {
+      //upDate func call
       onUpdate(todoData);
     }
   };
