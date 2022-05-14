@@ -19,7 +19,43 @@ import axios from 'axios';
 
 const TodoState = props => {
   const initialState = {
-    todos: [],
+    todos: [
+      {
+        id: 1,
+        title: 'todo one',
+        isCompleted: false,
+        description: 'this is todo one description ',
+        important: true,
+      },
+      {
+        id: 2,
+        title: 'todo two',
+        isCompleted: true,
+        description: 'this is todo two description',
+        important: true,
+      },
+      {
+        id: 3,
+        title: 'todo three',
+        isCompleted: true,
+        description: 'this is todo three description',
+        important: false,
+      },
+      {
+        id: 4,
+        title: 'todo four',
+        isCompleted: false,
+        description: 'this is todo four description',
+        important: true,
+      },
+      {
+        id: 5,
+        title: 'todo five',
+        isCompleted: false,
+        description: 'this is todo five description',
+        important: true,
+      },
+    ],
     current: null,
     todo: null,
     isLoading: false,
@@ -27,15 +63,6 @@ const TodoState = props => {
   };
 
   const [state, dispatch] = useReducer(TodoReducer, initialState);
-
-  // GET TODOS
-  const getTodos = () => {
-    try {
-      dispatch({ type: GET_TODOS, payload: 'todos' });
-    } catch (err) {
-      dispatch({ type: TODO_ERROR, payload: 'error message' });
-    }
-  };
 
   const addTodo = todo => {
     try {
@@ -111,7 +138,7 @@ const TodoState = props => {
         todo: state.todo,
         modalOpen: state.modalOpen,
         isLoading: state.isLoading,
-        getTodos,
+
         toggleLoading,
         toggleImportant,
         toggleComplete,

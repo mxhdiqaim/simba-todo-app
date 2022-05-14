@@ -5,20 +5,26 @@ import TodoContext from '../../context/todos/todoContext';
 const AddTodo = () => {
   const { current, onUpdate, addTodo } = useContext(TodoContext);
 
-  const [title, setTodo] = useState(current?.title);
-  const [description, setDescription] = useState(current?.description);
-  const [important, setImportat] = useState(
+  const [id] = useState(current && current.id);
+  const [title, setTitle] = useState(current ? current.title : '');
+  const [description, setDescription] = useState(
+    current ? current.description : '',
+  );
+  const [important, setImportant] = useState(
     current ? current.important : false,
   );
   const [isCompleted] = useState(false);
 
+  const todoData = current
+    ? { id, title, description, important, isCompleted }
+    : { title, description, important, isCompleted };
+
   const onSubmit = e => {
     e.preventDefault();
-    if (current) {
-      console.log(current);
-      onUpdate(current);
+    if (current === null) {
+      addTodo(todoData);
     } else {
-      addTodo({ title, description, important, isCompleted });
+      onUpdate(todoData);
     }
   };
 
@@ -30,7 +36,7 @@ const AddTodo = () => {
           type='text'
           placeholder='Add Todo'
           value={title}
-          onChange={e => setTodo(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
           required
         />
       </div>
@@ -49,7 +55,7 @@ const AddTodo = () => {
           type='checkbox'
           checked={important}
           value={important}
-          onChange={e => setImportat(e.currentTarget.checked)}
+          onChange={e => setImportant(e.currentTarget.checked)}
         />
       </div>
 

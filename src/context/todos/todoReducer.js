@@ -30,7 +30,10 @@ const todoReducer = (state, action) => {
     case UPDATE_TODO:
       return {
         ...state,
-        todo: action.payload,
+        todos: [
+          action.payload,
+          ...state.todos.filter(todo => todo.id !== action.payload.id),
+        ],
         modalOpen: false,
       };
 
@@ -65,6 +68,7 @@ const todoReducer = (state, action) => {
         ...state,
         current: action.payload,
         modalOpen: true,
+        isLoading: false,
       };
 
     // DELETE TODO
@@ -79,6 +83,7 @@ const todoReducer = (state, action) => {
         ...state,
         modalOpen: !state.modalOpen,
         current: null,
+        isLoading: false,
       };
     default:
       return state;
